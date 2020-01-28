@@ -1,0 +1,481 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OnlineCarBookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_CabDetails">
+          <Key>
+            <PropertyRef Name="CabId" />
+          </Key>
+          <Property Name="CabId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CabRegNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CabType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CabCapacity" Type="int" Nullable="false" />
+          <Property Name="CabName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ErrorLogs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Source" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Method" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ErrorOn" Type="datetime" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StackTrace" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_JourneyDetail">
+          <Key>
+            <PropertyRef Name="JournetId" />
+          </Key>
+          <Property Name="JournetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Source" Type="varchar(max)" Nullable="false" />
+          <Property Name="Destination" Type="varchar(max)" Nullable="false" />
+          <Property Name="TotalDistance" Type="float" Nullable="false" />
+          <Property Name="FareperKM" Type="float" Nullable="false" />
+          <Property Name="TotalFare" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_OTP_Details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="OTP" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GenratedOn" Type="datetime" Nullable="false" />
+          <Property Name="ValidTill" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_PasswordHistoryLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ChangedOn" Type="datetime" Nullable="false" />
+          <Property Name="OldPassword" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NewPassword" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsOnline" Type="bit" Nullable="false" />
+          <Property Name="IsLocked" Type="bit" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_T_CabDetails_To_T_Users">
+          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
+          <End Role="T_CabDetails" Type="Self.T_CabDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="T_CabDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_JourneyDetail_ToTable">
+          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
+          <End Role="T_JourneyDetail" Type="Self.T_JourneyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="T_JourneyDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_OTP_Details_ToTable">
+          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
+          <End Role="T_OTP_Details" Type="Self.T_OTP_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="T_OTP_Details">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_PasswordHistoryLog_ToTable">
+          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
+          <End Role="T_PasswordHistoryLog" Type="Self.T_PasswordHistoryLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="T_PasswordHistoryLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_Users_ToTable">
+          <End Role="T_Roles" Type="Self.T_Roles" Multiplicity="1" />
+          <End Role="T_Users" Type="Self.T_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="T_Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="proc_AddRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RoleName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="proc_ModifyRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RoleId" Type="int" Mode="In" />
+          <Parameter Name="RoleName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="proc_RemoveRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RoleId" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="OnlineCarBookingModelStoreContainer">
+          <EntitySet Name="T_CabDetails" EntityType="Self.T_CabDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ErrorLogs" EntityType="Self.T_ErrorLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_JourneyDetail" EntityType="Self.T_JourneyDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_OTP_Details" EntityType="Self.T_OTP_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_PasswordHistoryLog" EntityType="Self.T_PasswordHistoryLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Roles" EntityType="Self.T_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Users" EntityType="Self.T_Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_T_CabDetails_To_T_Users" Association="Self.FK_T_CabDetails_To_T_Users">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_CabDetails" EntitySet="T_CabDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_JourneyDetail_ToTable" Association="Self.FK_T_JourneyDetail_ToTable">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_JourneyDetail" EntitySet="T_JourneyDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_OTP_Details_ToTable" Association="Self.FK_T_OTP_Details_ToTable">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_OTP_Details" EntitySet="T_OTP_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_PasswordHistoryLog_ToTable" Association="Self.FK_T_PasswordHistoryLog_ToTable">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_PasswordHistoryLog" EntitySet="T_PasswordHistoryLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Users_ToTable" Association="Self.FK_T_Users_ToTable">
+            <End Role="T_Roles" EntitySet="T_Roles" />
+            <End Role="T_Users" EntitySet="T_Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OnlineCarBookingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_ErrorLogs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Source" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Method" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ErrorOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Message" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StackTrace" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_OTP_Details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="OTP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GenratedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ValidTill" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="T_Users" Relationship="Self.FK_T_OTP_Details_ToTable" FromRole="T_OTP_Details" ToRole="T_Users" />
+        </EntityType>
+        <EntityType Name="T_PasswordHistoryLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ChangedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OldPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NewPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="T_Users" Relationship="Self.FK_T_PasswordHistoryLog_ToTable" FromRole="T_PasswordHistoryLog" ToRole="T_Users" />
+        </EntityType>
+        <EntityType Name="T_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="T_Users" Relationship="Self.FK_T_Users_ToTable" FromRole="T_Roles" ToRole="T_Users" />
+        </EntityType>
+        <EntityType Name="T_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsOnline" Type="Boolean" Nullable="false" />
+          <Property Name="IsLocked" Type="Boolean" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="T_OTP_Details" Relationship="Self.FK_T_OTP_Details_ToTable" FromRole="T_Users" ToRole="T_OTP_Details" />
+          <NavigationProperty Name="T_PasswordHistoryLog" Relationship="Self.FK_T_PasswordHistoryLog_ToTable" FromRole="T_Users" ToRole="T_PasswordHistoryLog" />
+          <NavigationProperty Name="T_Roles" Relationship="Self.FK_T_Users_ToTable" FromRole="T_Users" ToRole="T_Roles" />
+          <NavigationProperty Name="T_JourneyDetail" Relationship="OnlineCarBookingModel.FK_T_JourneyDetail_ToTable" FromRole="T_Users" ToRole="T_JourneyDetail" />
+          <NavigationProperty Name="T_CabDetails" Relationship="OnlineCarBookingModel.FK_T_CabDetails_To_T_Users" FromRole="T_Users" ToRole="T_CabDetails" />
+        </EntityType>
+        <Association Name="FK_T_OTP_Details_ToTable">
+          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
+          <End Role="T_OTP_Details" Type="Self.T_OTP_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="T_OTP_Details">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_PasswordHistoryLog_ToTable">
+          <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
+          <End Role="T_PasswordHistoryLog" Type="Self.T_PasswordHistoryLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="T_PasswordHistoryLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_Users_ToTable">
+          <End Role="T_Roles" Type="Self.T_Roles" Multiplicity="1" />
+          <End Role="T_Users" Type="Self.T_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="T_Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OnlineCarBookingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_ErrorLogs" EntityType="Self.T_ErrorLogs" />
+          <EntitySet Name="T_OTP_Details" EntityType="Self.T_OTP_Details" />
+          <EntitySet Name="T_PasswordHistoryLog" EntityType="Self.T_PasswordHistoryLog" />
+          <EntitySet Name="T_Roles" EntityType="Self.T_Roles" />
+          <EntitySet Name="T_Users" EntityType="Self.T_Users" />
+          <AssociationSet Name="FK_T_OTP_Details_ToTable" Association="Self.FK_T_OTP_Details_ToTable">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_OTP_Details" EntitySet="T_OTP_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_PasswordHistoryLog_ToTable" Association="Self.FK_T_PasswordHistoryLog_ToTable">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_PasswordHistoryLog" EntitySet="T_PasswordHistoryLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Users_ToTable" Association="Self.FK_T_Users_ToTable">
+            <End Role="T_Roles" EntitySet="T_Roles" />
+            <End Role="T_Users" EntitySet="T_Users" />
+          </AssociationSet>
+          <FunctionImport Name="proc_AddRole">
+          <Parameter Name="RoleName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="proc_ModifyRole">
+            <Parameter Name="RoleId" Mode="In" Type="Int32" />
+            <Parameter Name="RoleName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="proc_RemoveRole">
+          <Parameter Name="RoleId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="T_JourneyDetail" EntityType="OnlineCarBookingModel.T_JourneyDetail" />
+          <AssociationSet Name="FK_T_JourneyDetail_ToTable" Association="OnlineCarBookingModel.FK_T_JourneyDetail_ToTable">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_JourneyDetail" EntitySet="T_JourneyDetail" />
+          </AssociationSet>
+          <EntitySet Name="T_CabDetails" EntityType="OnlineCarBookingModel.T_CabDetails" />
+          <AssociationSet Name="FK_T_CabDetails_To_T_Users" Association="OnlineCarBookingModel.FK_T_CabDetails_To_T_Users">
+            <End Role="T_Users" EntitySet="T_Users" />
+            <End Role="T_CabDetails" EntitySet="T_CabDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="T_JourneyDetail">
+          <Key>
+            <PropertyRef Name="JournetId" />
+          </Key>
+          <Property Name="JournetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Source" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Destination" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FareperKM" Type="Double" Nullable="false" />
+          <Property Name="TotalFare" Type="Double" Nullable="false" />
+          <NavigationProperty Name="T_Users" Relationship="OnlineCarBookingModel.FK_T_JourneyDetail_ToTable" FromRole="T_JourneyDetail" ToRole="T_Users" />
+          <Property Name="TotalDistance" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_T_JourneyDetail_ToTable">
+          <End Type="OnlineCarBookingModel.T_Users" Role="T_Users" Multiplicity="1" />
+          <End Type="OnlineCarBookingModel.T_JourneyDetail" Role="T_JourneyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="T_JourneyDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="T_CabDetails">
+          <Key>
+            <PropertyRef Name="CabId" />
+          </Key>
+          <Property Name="CabId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CabRegNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CabType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CabCapacity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="T_Users" Relationship="OnlineCarBookingModel.FK_T_CabDetails_To_T_Users" FromRole="T_CabDetails" ToRole="T_Users" />
+          <Property Name="CabName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_T_CabDetails_To_T_Users">
+          <End Type="OnlineCarBookingModel.T_Users" Role="T_Users" Multiplicity="1" />
+          <End Type="OnlineCarBookingModel.T_CabDetails" Role="T_CabDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="T_CabDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OnlineCarBookingModelStoreContainer" CdmEntityContainer="OnlineCarBookingEntities">
+          <EntitySetMapping Name="T_ErrorLogs">
+            <EntityTypeMapping TypeName="OnlineCarBookingModel.T_ErrorLogs">
+              <MappingFragment StoreEntitySet="T_ErrorLogs">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="ErrorOn" ColumnName="ErrorOn" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_OTP_Details">
+            <EntityTypeMapping TypeName="OnlineCarBookingModel.T_OTP_Details">
+              <MappingFragment StoreEntitySet="T_OTP_Details">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OTP" ColumnName="OTP" />
+                <ScalarProperty Name="GenratedOn" ColumnName="GenratedOn" />
+                <ScalarProperty Name="ValidTill" ColumnName="ValidTill" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_PasswordHistoryLog">
+            <EntityTypeMapping TypeName="OnlineCarBookingModel.T_PasswordHistoryLog">
+              <MappingFragment StoreEntitySet="T_PasswordHistoryLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ChangedOn" ColumnName="ChangedOn" />
+                <ScalarProperty Name="OldPassword" ColumnName="OldPassword" />
+                <ScalarProperty Name="NewPassword" ColumnName="NewPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Roles">
+            <EntityTypeMapping TypeName="OnlineCarBookingModel.T_Roles">
+              <MappingFragment StoreEntitySet="T_Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Users">
+            <EntityTypeMapping TypeName="OnlineCarBookingModel.T_Users">
+              <MappingFragment StoreEntitySet="T_Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="proc_AddRole" FunctionName="OnlineCarBookingModel.Store.proc_AddRole" />
+          <FunctionImportMapping FunctionImportName="proc_ModifyRole" FunctionName="OnlineCarBookingModel.Store.proc_ModifyRole" />
+          <FunctionImportMapping FunctionImportName="proc_RemoveRole" FunctionName="OnlineCarBookingModel.Store.proc_RemoveRole" />
+          <EntitySetMapping Name="T_JourneyDetail">
+            <EntityTypeMapping TypeName="OnlineCarBookingModel.T_JourneyDetail">
+              <MappingFragment StoreEntitySet="T_JourneyDetail">
+                <ScalarProperty Name="TotalDistance" ColumnName="TotalDistance" />
+                <ScalarProperty Name="TotalFare" ColumnName="TotalFare" />
+                <ScalarProperty Name="FareperKM" ColumnName="FareperKM" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="JournetId" ColumnName="JournetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_CabDetails">
+            <EntityTypeMapping TypeName="OnlineCarBookingModel.T_CabDetails">
+              <MappingFragment StoreEntitySet="T_CabDetails">
+                <ScalarProperty Name="CabName" ColumnName="CabName" />
+                <ScalarProperty Name="CabCapacity" ColumnName="CabCapacity" />
+                <ScalarProperty Name="CabType" ColumnName="CabType" />
+                <ScalarProperty Name="CabRegNo" ColumnName="CabRegNo" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CabId" ColumnName="CabId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

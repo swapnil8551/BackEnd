@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d69a71b7dcdb4325b33f38539ee5d591" Name="Diagram1" ZoomLevel="114">
+        <EntityTypeShape EntityType="OnlineCarBookingModel.T_ErrorLogs" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCarBookingModel.T_OTP_Details" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCarBookingModel.T_PasswordHistoryLog" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCarBookingModel.T_Roles" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCarBookingModel.T_Users" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
+        <AssociationConnector Association="OnlineCarBookingModel.FK_T_OTP_Details_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCarBookingModel.FK_T_PasswordHistoryLog_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCarBookingModel.FK_T_Users_ToTable" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OnlineCarBookingModel.T_JourneyDetail" Width="1.5" PointX="5.25" PointY="7.5" />
+        <AssociationConnector Association="OnlineCarBookingModel.FK_T_JourneyDetail_ToTable" />
+        <EntityTypeShape EntityType="OnlineCarBookingModel.T_CabDetails" Width="1.5" PointX="5.25" PointY="11.625" />
+        <AssociationConnector Association="OnlineCarBookingModel.FK_T_CabDetails_To_T_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

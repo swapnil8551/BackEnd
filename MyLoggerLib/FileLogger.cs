@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MyLoggerLib
+{
+    class FileLogger : ILogger
+    {
+        private static FileLogger flogger = new FileLogger();
+        private FileLogger()
+        {
+            Console.WriteLine("File Logger Object Created");
+        }
+        public static FileLogger GetLogger()
+        {
+            return flogger;
+        }
+        string path = @".\log.txt";
+        FileStream fs = null;
+        StreamWriter writer = null;
+
+        public void Log(string msg)
+        {
+            if (File.Exists(path))
+            {
+                fs = new FileStream(path, FileMode.Append, FileAccess.Write);
+            }
+            else
+            {
+                fs = new FileStream(path, FileMode.Create, FileAccess.Write);
+            }
+            writer = new StreamWriter(fs);
+
+            writer.WriteLine(string.Format("Logged at {0} : {1}", DateTime.Now.ToString(), msg));
+            writer.Close();
+            fs.Close();
+            writer = null;
+            fs = null;
+        }
+    }
+}

@@ -1,0 +1,5 @@
+C:\Users\pretty\documents\visual studio 2015\Projects\FinalProject\MySecurityLib\bin\Debug\MySecurityLib.dll
+C:\Users\pretty\documents\visual studio 2015\Projects\FinalProject\MySecurityLib\bin\Debug\MySecurityLib.pdb
+C:\Users\pretty\documents\visual studio 2015\Projects\FinalProject\MySecurityLib\obj\Debug\MySecurityLib.csprojResolveAssemblyReference.cache
+C:\Users\pretty\documents\visual studio 2015\Projects\FinalProject\MySecurityLib\obj\Debug\MySecurityLib.dll
+C:\Users\pretty\documents\visual studio 2015\Projects\FinalProject\MySecurityLib\obj\Debug\MySecurityLib.pdb
